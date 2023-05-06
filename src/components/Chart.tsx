@@ -29,10 +29,18 @@ const Chart = () => {
     });
 
     const cityArr = Object.keys(cityObj).map((city) => {
-      return {
-        type: city,
-        value: Number(cityObj[city]),
-      };
+      if (mainData) {
+        const val = (100 * Number(cityObj[city])) / mainData?.length;
+        return {
+          type: city,
+          value: Number(val.toFixed(2)),
+        };
+      } else {
+        return {
+          type: "no cities",
+          value: 0,
+        };
+      }
     });
 
     return cityArr;
@@ -58,6 +66,7 @@ const Chart = () => {
       <Button style={{ fontSize: "25px" }} type="link">
         <Link to={"/"}>Home</Link>
       </Button>
+      <h1 style={{ textAlign: "center" }}>Users by City (Percentage %) </h1>
       <Pie {...config} />;
     </>
   );
